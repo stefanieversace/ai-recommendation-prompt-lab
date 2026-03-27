@@ -430,3 +430,31 @@ st.caption(
     "Built as a prompt engineering portfolio project. "
     "Next step: connect to a live model API for fully dynamic recommendations."
 )
+def analyse_preferences(user_input: str, use_case: str) -> dict:
+    text = user_input.lower()
+
+    if use_case == "Music":
+        return {
+            "primary_interests": ["indie", "emotional", "soft vocals"],
+            "style_preferences": ["intimate", "warm", "lyric-driven"],
+            "disliked": ["overly mainstream", "highly commercial"],
+            "themes": ["late-night listening", "rainy mood", "reflective"]
+        }
+
+    elif use_case == "Entertainment":
+        return {
+            "primary_interests": ["thriller", "emotional depth"],
+            "style_preferences": ["plot-driven", "character-focused"],
+            "disliked": ["slow pacing"],
+            "themes": ["psychological tension", "twists"]
+        }
+
+    elif use_case == "Security":
+        return {
+            "primary_interests": ["threat detection", "analysis"],
+            "style_preferences": ["practical", "real-world"],
+            "disliked": ["theoretical only"],
+            "themes": ["SOC workflows", "incident response"]
+        }
+
+    return {}
