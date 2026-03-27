@@ -25,3 +25,13 @@ Design prompts that turn unstructured preference information into useful recomme
 - personalization logic
 - structured output design
 - AI-assisted recommendation workflows
+
+## System Architecture
+
+User Input → Prompt Template → LLM → Structured Output → Recommendation
+
+Components:
+- Input layer: user preferences (genre, mood, constraints)
+- Prompt engineering layer: structured prompts
+- LLM processing
+- Output formatting layer
