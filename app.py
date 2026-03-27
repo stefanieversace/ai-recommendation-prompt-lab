@@ -1,55 +1,76 @@
 import streamlit as st
 import random
 
-# Page config
 st.set_page_config(
     page_title="AI Recommendation Prompt Lab",
-    page_icon="🎯",
+    page_icon="🎵",
     layout="centered"
 )
 
-# ----------------------------
-# Helper functions
-# ----------------------------
+
 def generate_prompt(user_input: str, strategy: str, use_case: str) -> str:
     """
     Generate a prompt based on the selected strategy and use case.
     """
     if use_case == "Entertainment":
         if strategy == "Basic":
-            return f"Recommend 5 movies, shows, or media titles based on this request: {user_input}"
+            return f"Recommend 5 films or shows based on this request: {user_input}"
         elif strategy == "Structured":
             return (
-                f"You are a recommendation system. Based on the user's request, recommend exactly 5 titles.\n"
+                "You are a recommendation system.\n"
                 f"User request: {user_input}\n"
-                f"For each recommendation, include:\n"
-                f"1. Title\n"
-                f"2. Genre\n"
-                f"3. One-sentence explanation\n"
+                "Recommend exactly 5 films or shows.\n"
+                "For each recommendation include:\n"
+                "1. Title\n"
+                "2. Genre\n"
+                "3. One-sentence explanation\n"
             )
         elif strategy == "Persona-based":
             return (
-                f"You are an expert film and television critic. Recommend 5 titles based on this request: {user_input}.\n"
-                f"Explain why each recommendation is a strong match in a thoughtful but concise way."
+                "You are an expert film and television critic.\n"
+                f"Recommend 5 titles based on this request: {user_input}\n"
+                "Explain briefly why each recommendation is a strong match."
             )
 
     elif use_case == "Security":
         if strategy == "Basic":
-            return f"Recommend 5 relevant threat intelligence topics, techniques, or resources based on: {user_input}"
+            return f"Recommend 5 relevant cybersecurity topics, techniques, or resources based on: {user_input}"
         elif strategy == "Structured":
             return (
-                f"You are a cybersecurity analyst. Based on the user's request, recommend exactly 5 relevant items.\n"
+                "You are a cybersecurity analyst.\n"
                 f"User request: {user_input}\n"
-                f"For each recommendation, include:\n"
-                f"1. Topic or threat\n"
-                f"2. Why it is relevant\n"
-                f"3. A short analyst note\n"
+                "Recommend exactly 5 relevant items.\n"
+                "For each recommendation include:\n"
+                "1. Topic or threat\n"
+                "2. Why it is relevant\n"
+                "3. A short analyst note\n"
             )
         elif strategy == "Persona-based":
             return (
-                f"You are a senior threat intelligence analyst. Recommend 5 relevant threats, attack patterns, "
-                f"or intelligence areas based on this request: {user_input}.\n"
-                f"Provide concise analyst commentary for each recommendation."
+                "You are a senior threat intelligence analyst.\n"
+                f"Recommend 5 relevant threats, attack patterns, or intelligence areas based on this request: {user_input}\n"
+                "Provide concise analyst commentary for each recommendation."
+            )
+
+    elif use_case == "Music":
+        if strategy == "Basic":
+            return f"Recommend 5 songs based on this request: {user_input}"
+        elif strategy == "Structured":
+            return (
+                "You are a music recommendation system.\n"
+                f"User request: {user_input}\n"
+                "Recommend exactly 5 songs.\n"
+                "For each recommendation include:\n"
+                "1. Song title\n"
+                "2. Artist\n"
+                "3. Genre or vibe\n"
+                "4. One-sentence explanation\n"
+            )
+        elif strategy == "Persona-based":
+            return (
+                "You are an expert music curator for a streaming platform.\n"
+                f"Recommend 5 songs based on this request: {user_input}\n"
+                "Focus on mood, sound, listener intent, and replay value."
             )
 
     return f"Recommend 5 items based on: {user_input}"
@@ -58,7 +79,7 @@ def generate_prompt(user_input: str, strategy: str, use_case: str) -> str:
 def get_recommendations(user_input: str, use_case: str) -> list[dict]:
     """
     Mock recommendations for demo purposes.
-    You can later replace this with a real API call.
+    Replace later with a real API if needed.
     """
     entertainment_data = {
         "thriller": [
@@ -122,6 +143,44 @@ def get_recommendations(user_input: str, use_case: str) -> list[dict]:
         ]
     }
 
+    music_data = {
+        "sad_pop": [
+            ("drivers license", "Olivia Rodrigo", "Melancholic pop ballad with emotional intensity."),
+            ("Liability", "Lorde", "Minimal, vulnerable, and emotionally raw."),
+            ("Skinny Love", "Bon Iver", "Fragile indie-folk with a haunting tone."),
+            ("When the Party's Over", "Billie Eilish", "Quiet, intimate, and deeply reflective."),
+            ("Ghostin", "Ariana Grande", "Soft and aching with layered emotional themes.")
+        ],
+        "indie_rainy": [
+            ("Cherry Wine", "Hozier", "Gentle acoustic melancholy perfect for a reflective mood."),
+            ("Moon Song", "Phoebe Bridgers", "Soft, intimate, and late-night feeling."),
+            ("Holocene", "Bon Iver", "Atmospheric and expansive with introspective warmth."),
+            ("Bloom", "The Paper Kites", "Dreamy indie texture for a rainy-day soundtrack."),
+            ("Youth", "Daughter", "Delicate and cinematic with emotional depth.")
+        ],
+        "gym": [
+            ("Paint The Town Red", "Doja Cat", "Confident, rhythmic, and high-energy."),
+            ("Boss Bitch", "Doja Cat", "Aggressive pop-rap energy for workouts."),
+            ("Physical", "Dua Lipa", "Fast-paced, polished, and upbeat."),
+            ("Run the World (Girls)", "Beyoncé", "Powerful and motivating with strong momentum."),
+            ("Titanium", "David Guetta ft. Sia", "Big-energy anthem built for intensity.")
+        ],
+        "dreamy_pop": [
+            ("Supercut", "Lorde", "Glossy, emotional pop with a nostalgic edge."),
+            ("Space Song", "Beach House", "Floating and dreamy with a hypnotic atmosphere."),
+            ("After The Storm", "Kali Uchis", "Smooth, soft, and hazy in tone."),
+            ("Sofia", "Clairo", "Warm indie-pop with an airy feel."),
+            ("West Coast", "Lana Del Rey", "Slow, cinematic, and mood-driven.")
+        ],
+        "spotify_style": [
+            ("Sunflower", "Post Malone, Swae Lee", "A highly replayable cross-genre streaming favourite."),
+            ("As It Was", "Harry Styles", "Clean pop production with broad listener appeal."),
+            ("Blinding Lights", "The Weeknd", "Strong repeat value, immediate hook, and mainstream appeal."),
+            ("Good Days", "SZA", "Smooth, mood-based listening with playlist versatility."),
+            ("505", "Arctic Monkeys", "Beloved catalogue track with strong emotional resonance.")
+        ]
+    }
+
     text = user_input.lower()
 
     if use_case == "Entertainment":
@@ -135,7 +194,20 @@ def get_recommendations(user_input: str, use_case: str) -> list[dict]:
             chosen = entertainment_data["comfort"]
         else:
             chosen = random.choice(list(entertainment_data.values()))
-    else:
+
+        recommendations = []
+        for title, category, explanation in chosen:
+            recommendations.append(
+                {
+                    "title": title,
+                    "subtitle": category,
+                    "explanation": explanation,
+                    "confidence": random.randint(84, 97)
+                }
+            )
+        return recommendations
+
+    if use_case == "Security":
         if any(word in text for word in ["phishing", "email", "credential"]):
             chosen = security_data["phishing"]
         elif any(word in text for word in ["ransomware", "extortion", "encrypt"]):
@@ -147,26 +219,51 @@ def get_recommendations(user_input: str, use_case: str) -> list[dict]:
         else:
             chosen = random.choice(list(security_data.values()))
 
-    recommendations = []
-    for title, category, explanation in chosen:
-        recommendations.append(
-            {
-                "title": title,
-                "category": category,
-                "explanation": explanation,
-                "confidence": random.randint(84, 97)
-            }
-        )
-    return recommendations
+        recommendations = []
+        for title, category, explanation in chosen:
+            recommendations.append(
+                {
+                    "title": title,
+                    "subtitle": category,
+                    "explanation": explanation,
+                    "confidence": random.randint(84, 97)
+                }
+            )
+        return recommendations
+
+    if use_case == "Music":
+        if any(word in text for word in ["sad", "heartbreak", "cry", "breakup", "emotional"]):
+            chosen = music_data["sad_pop"]
+        elif any(word in text for word in ["rain", "rainy", "indie", "walk", "moody"]):
+            chosen = music_data["indie_rainy"]
+        elif any(word in text for word in ["gym", "workout", "run", "energy", "female vocals"]):
+            chosen = music_data["gym"]
+        elif any(word in text for word in ["dreamy", "late night", "night", "soft pop", "ethereal"]):
+            chosen = music_data["dreamy_pop"]
+        elif any(word in text for word in ["spotify", "playlist", "replay", "popular", "streaming"]):
+            chosen = music_data["spotify_style"]
+        else:
+            chosen = random.choice(list(music_data.values()))
+
+        recommendations = []
+        for song, artist, explanation in chosen:
+            recommendations.append(
+                {
+                    "title": song,
+                    "subtitle": artist,
+                    "explanation": explanation,
+                    "confidence": random.randint(84, 97)
+                }
+            )
+        return recommendations
+
+    return []
 
 
 def fill_example(example_text: str):
     st.session_state.user_input = example_text
 
 
-# ----------------------------
-# Styling
-# ----------------------------
 st.markdown(
     """
     <style>
@@ -186,35 +283,25 @@ st.markdown(
             margin-bottom: 1rem;
             background-color: #fafafa;
         }
-        .small-note {
-            color: #666666;
-            font-size: 0.95rem;
-        }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-# ----------------------------
-# Header
-# ----------------------------
 st.markdown('<div class="main-title">AI Recommendation Prompt Lab</div>', unsafe_allow_html=True)
 st.markdown(
-    '<div class="subtitle">An interactive demo exploring prompt engineering for recommendation systems.</div>',
+    '<div class="subtitle">An interactive demo exploring prompt engineering for film, security, and music recommendation systems.</div>',
     unsafe_allow_html=True
 )
 
 st.divider()
 
-# ----------------------------
-# Sidebar
-# ----------------------------
 with st.sidebar:
     st.header("Demo Settings")
 
     use_case = st.selectbox(
         "Use case",
-        ["Entertainment", "Security"]
+        ["Entertainment", "Security", "Music"]
     )
 
     strategy = st.selectbox(
@@ -231,7 +318,8 @@ with st.sidebar:
             fill_example("Comfort movies for a rainy day")
         if st.button("Movies like Interstellar but more emotional", use_container_width=True):
             fill_example("Movies like Interstellar but more emotional")
-    else:
+
+    elif use_case == "Security":
         if st.button("Threat intelligence topics relevant to phishing", use_container_width=True):
             fill_example("Threat intelligence topics relevant to phishing")
         if st.button("SOC topics related to alert triage and Sentinel", use_container_width=True):
@@ -239,27 +327,34 @@ with st.sidebar:
         if st.button("Key areas to study for ransomware analysis", use_container_width=True):
             fill_example("Key areas to study for ransomware analysis")
 
+    elif use_case == "Music":
+        if st.button("Songs like Night Changes but sadder", use_container_width=True):
+            fill_example("Songs like Night Changes but sadder")
+        if st.button("Indie songs for a rainy walk in London", use_container_width=True):
+            fill_example("Indie songs for a rainy walk in London")
+        if st.button("Gym songs with female vocals", use_container_width=True):
+            fill_example("Gym songs with female vocals")
+
     st.markdown("---")
     st.markdown(
-        "This is a **portfolio demo**. It uses mock recommendation logic now, "
-        "but can later be connected to a live LLM API."
+        "This is a **portfolio demo** showing how prompt engineering can support recommendation systems "
+        "across multiple domains."
     )
 
-# ----------------------------
-# Main input
-# ----------------------------
 if "user_input" not in st.session_state:
     st.session_state.user_input = ""
 
 user_input = st.text_input(
     "What would you like recommendations for?",
     value=st.session_state.user_input,
-    placeholder="Example: Fast-paced thrillers with plot twists"
+    placeholder="Example: Dreamy late-night pop songs"
 )
 
-col1, col2 = st.columns([1, 1])
+col1, col2 = st.columns(2)
+
 with col1:
     generate_clicked = st.button("Generate Recommendations", use_container_width=True)
+
 with col2:
     clear_clicked = st.button("Clear", use_container_width=True)
 
@@ -267,9 +362,6 @@ if clear_clicked:
     st.session_state.user_input = ""
     st.rerun()
 
-# ----------------------------
-# Output
-# ----------------------------
 if generate_clicked:
     if not user_input.strip():
         st.warning("Please enter a request first.")
@@ -280,18 +372,27 @@ if generate_clicked:
             recommendations = get_recommendations(user_input, use_case)
 
         st.divider()
-
         st.subheader("Generated Prompt")
         st.code(prompt, language="text")
 
         st.subheader("Recommendations")
 
         for rec in recommendations:
+            if use_case == "Music":
+                title_label = "Song"
+                subtitle_label = "Artist"
+            elif use_case == "Entertainment":
+                title_label = "Title"
+                subtitle_label = "Genre"
+            else:
+                title_label = "Topic"
+                subtitle_label = "Category"
+
             st.markdown(
                 f"""
                 <div class="card">
-                    <h4 style="margin-bottom: 0.4rem;">{rec['title']}</h4>
-                    <p style="margin: 0.2rem 0;"><strong>Category:</strong> {rec['category']}</p>
+                    <p style="margin: 0.2rem 0;"><strong>{title_label}:</strong> {rec['title']}</p>
+                    <p style="margin: 0.2rem 0;"><strong>{subtitle_label}:</strong> {rec['subtitle']}</p>
                     <p style="margin: 0.2rem 0;"><strong>Why it fits:</strong> {rec['explanation']}</p>
                     <p style="margin: 0.2rem 0;"><strong>Confidence:</strong> {rec['confidence']}%</p>
                 </div>
@@ -300,7 +401,14 @@ if generate_clicked:
             )
 
         st.subheader("Analyst Insight")
-        if use_case == "Entertainment":
+
+        if use_case == "Music":
+            st.write(
+                "Music recommendation is especially useful for demonstrating user-intent modelling because listeners "
+                "often describe what they want in emotional or contextual language rather than technical genre terms. "
+                "This makes prompt design, mood interpretation, and output consistency especially important."
+            )
+        elif use_case == "Entertainment":
             st.write(
                 "This output shows how recommendation quality changes based on prompt design. "
                 "More structured prompts typically produce more consistent and explainable results."
@@ -313,15 +421,12 @@ if generate_clicked:
 
         st.subheader("Why this demo matters")
         st.write(
-            "This project is designed to show how prompt engineering can be used not just to generate outputs, "
-            "but to simulate recommendation logic, compare prompting approaches, and evaluate response quality."
+            "This project demonstrates how prompt engineering can be used not just to generate outputs, "
+            "but to simulate recommendation logic, compare prompting strategies, and evaluate the quality of results."
         )
 
-# ----------------------------
-# Footer
-# ----------------------------
 st.divider()
 st.caption(
     "Built as a prompt engineering portfolio project. "
-    "Next step: connect to a live LLM API for real-time generated outputs."
+    "Next step: connect to a live model API for fully dynamic recommendations."
 )
