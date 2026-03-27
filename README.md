@@ -35,3 +35,16 @@ Components:
 - Prompt engineering layer: structured prompts
 - LLM processing
 - Output formatting layer
+
+  ## Analyst Insights
+
+Prompt-based recommendation systems highlight a key limitation:
+
+They rely heavily on how well user intent is captured in natural language.
+
+Small prompt variations significantly change output quality, which introduces:
+- inconsistency
+- bias
+- lack of reproducibility
+
+This suggests prompt engineering alone is not sufficient for scalable recommendation systems.
