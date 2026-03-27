@@ -2,8 +2,8 @@ import streamlit as st
 import random
 
 st.set_page_config(
-    page_title="AI Recommendation Prompt Lab",
-    page_icon="🎵",
+    page_title="AI Personalisation and Recommendation Lab",
+    page_icon="✨",
     layout="centered"
 )
 
@@ -382,49 +382,161 @@ def fill_example(example_text: str):
 st.markdown(
     """
     <style>
-        .main-title {
-            font-size: 2.2rem;
-            font-weight: 700;
-            margin-bottom: 0.2rem;
-        }
-        .subtitle {
-            color: #666666;
-            margin-bottom: 1.2rem;
-        }
-        .card {
-            padding: 1rem;
-            border: 1px solid #e6e6e6;
-            border-radius: 16px;
-            margin-bottom: 1rem;
-            background-color: #fafafa;
-        }
+    .stApp {
+        background: linear-gradient(180deg, #fff8fc 0%, #f8f4ff 45%, #eef7ff 100%);
+        color: #3f3651;
+    }
+
+    section[data-testid="stSidebar"] {
+        background: linear-gradient(180deg, rgba(255,255,255,0.88), rgba(248,243,255,0.88));
+        border-right: 1px solid rgba(184, 162, 214, 0.25);
+    }
+
+    .hero-card {
+        background: rgba(255, 255, 255, 0.6);
+        border: 1px solid rgba(255,255,255,0.7);
+        backdrop-filter: blur(10px);
+        border-radius: 28px;
+        padding: 2rem 1.5rem 1.7rem 1.5rem;
+        box-shadow: 0 12px 30px rgba(176, 158, 214, 0.12);
+        margin-bottom: 1rem;
+    }
+
+    .main-title {
+        font-size: 2.5rem;
+        font-weight: 700;
+        line-height: 1.1;
+        color: #5c4a72;
+        margin-bottom: 0.4rem;
+        text-align: center;
+    }
+
+    .subtitle {
+        font-size: 1rem;
+        color: #6d6283;
+        text-align: center;
+        margin-bottom: 0.5rem;
+    }
+
+    .tiny-tag {
+        text-align: center;
+        font-size: 0.9rem;
+        color: #8d7aa8;
+        margin-bottom: 0.2rem;
+    }
+
+    .soft-card {
+        background: rgba(255,255,255,0.72);
+        border: 1px solid rgba(221, 211, 241, 0.9);
+        border-radius: 22px;
+        padding: 1rem 1rem 0.8rem 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 8px 22px rgba(180, 164, 213, 0.10);
+    }
+
+    .rec-card {
+        background: rgba(255,255,255,0.82);
+        border: 1px solid rgba(226, 216, 245, 0.95);
+        border-radius: 22px;
+        padding: 1rem 1rem 0.9rem 1rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 10px 26px rgba(177, 160, 214, 0.12);
+    }
+
+    .rec-title {
+        font-size: 1.15rem;
+        font-weight: 700;
+        color: #5c4a72;
+        margin-bottom: 0.35rem;
+    }
+
+    .rec-sub {
+        color: #7f6a99;
+        font-size: 0.95rem;
+        margin-bottom: 0.45rem;
+    }
+
+    .section-label {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: #5d4a72;
+        margin-bottom: 0.5rem;
+    }
+
+    .pill {
+        display: inline-block;
+        padding: 0.35rem 0.7rem;
+        border-radius: 999px;
+        background: #f3ebff;
+        border: 1px solid #e2d4ff;
+        color: #6d5a88;
+        font-size: 0.88rem;
+        margin: 0.2rem 0.25rem 0.2rem 0;
+    }
+
+    .caption-soft {
+        color: #7b7091;
+        font-size: 0.95rem;
+    }
+
+    .stButton > button {
+        border-radius: 999px;
+        border: 1px solid #decdf8;
+        background: linear-gradient(180deg, #fffaff 0%, #f4ecff 100%);
+        color: #5e4b74;
+        font-weight: 600;
+        padding: 0.6rem 1rem;
+        box-shadow: 0 4px 14px rgba(185, 168, 220, 0.18);
+    }
+
+    .stTextInput > div > div > input {
+        border-radius: 18px;
+        border: 1px solid #e1d5f5;
+        background: rgba(255,255,255,0.88);
+    }
+
+    div[data-baseweb="select"] > div {
+        border-radius: 16px !important;
+        border-color: #e1d5f5 !important;
+        background: rgba(255,255,255,0.85) !important;
+    }
+
+    h2, h3 {
+        color: #5c4a72;
+    }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-st.markdown('<div class="main-title">AI Recommendation Prompt Lab</div>', unsafe_allow_html=True)
 st.markdown(
-    '<div class="subtitle">An interactive demo exploring prompt engineering for film, security, and music recommendation systems.</div>',
+    """
+    <div class="hero-card">
+        <div class="tiny-tag">✨ soft signals, better recommendations, a little bit of magic ✨</div>
+        <div class="main-title">AI Personalisation and Recommendation Lab</div>
+        <div class="subtitle">
+            A dreamy interactive demo exploring how natural language can be transformed into
+            structured preference signals for music, entertainment, and security recommendations.
+        </div>
+    </div>
+    """,
     unsafe_allow_html=True
 )
 
-st.divider()
-
 with st.sidebar:
-    st.header("Demo Settings")
+    st.markdown("## 🌙 Curate the experience")
 
     use_case = st.selectbox(
-        "Use case",
-        ["Entertainment", "Security", "Music"]
+        "Choose a world",
+        ["Music", "Entertainment", "Security"]
     )
 
     strategy = st.selectbox(
-        "Prompt strategy",
+        "Choose a prompt style",
         ["Basic", "Structured", "Persona-based"]
     )
 
-    st.markdown("### Example Inputs")
+    st.markdown("### ✨ Try a prompt")
 
     if use_case == "Entertainment":
         if st.button("Underrated thrillers with plot twists", use_container_width=True):
@@ -447,31 +559,43 @@ with st.sidebar:
             fill_example("Songs like Night Changes but sadder")
         if st.button("Indie songs for a rainy walk in London", use_container_width=True):
             fill_example("Indie songs for a rainy walk in London")
+        if st.button("Dreamy late-night pop songs", use_container_width=True):
+            fill_example("Dreamy late-night pop songs")
         if st.button("Gym songs with female vocals", use_container_width=True):
             fill_example("Gym songs with female vocals")
 
     st.markdown("---")
     st.markdown(
-        "This is a **portfolio demo** showing how prompt engineering can support recommendation systems "
-        "across multiple domains."
+        '<div class="caption-soft">This portfolio demo explores personalisation through preference extraction, mood interpretation, and recommendation logic.</div>',
+        unsafe_allow_html=True
     )
 
 if "user_input" not in st.session_state:
     st.session_state.user_input = ""
 
+st.markdown(
+    """
+    <div class="soft-card">
+        <div class="section-label">💭 Tell me your vibe</div>
+    """,
+    unsafe_allow_html=True
+)
+
 user_input = st.text_input(
     "What would you like recommendations for?",
     value=st.session_state.user_input,
-    placeholder="Example: Dreamy late-night pop songs"
+    placeholder="Example: intimate indie songs with thoughtful lyrics for a rainy walk"
 )
+
+st.markdown("</div>", unsafe_allow_html=True)
 
 col1, col2 = st.columns(2)
 
 with col1:
-    generate_clicked = st.button("Generate Recommendations", use_container_width=True)
+    generate_clicked = st.button("✨ Generate", use_container_width=True)
 
 with col2:
-    clear_clicked = st.button("Clear", use_container_width=True)
+    clear_clicked = st.button("↺ Clear", use_container_width=True)
 
 if clear_clicked:
     st.session_state.user_input = ""
@@ -479,100 +603,138 @@ if clear_clicked:
 
 if generate_clicked:
     if not user_input.strip():
-        st.warning("Please enter a request first.")
+        st.warning("Please enter a prompt first.")
     else:
         prompt = generate_prompt(user_input, strategy, use_case)
         analysis = analyse_preferences(user_input, use_case)
 
-        with st.spinner("Generating recommendations..."):
+        with st.spinner("Reading the mood and building recommendations..."):
             recommendations = get_recommendations(user_input, use_case)
 
-        st.divider()
-
-        st.subheader("Preference Analysis")
+        st.markdown(
+            """
+            <div class="soft-card">
+                <div class="section-label">🫧 Preference signals</div>
+            """,
+            unsafe_allow_html=True
+        )
 
         left_col, right_col = st.columns(2)
 
         with left_col:
-            st.markdown("**Primary Interests**")
+            st.markdown("**Primary interests**")
             for item in analysis.get("primary_interests", []):
-                st.write(f"- {item}")
+                st.markdown(f'<span class="pill">{item}</span>', unsafe_allow_html=True)
 
-            st.markdown("**Style Preferences**")
+            st.markdown("**Style preferences**")
             for item in analysis.get("style_preferences", []):
-                st.write(f"- {item}")
+                st.markdown(f'<span class="pill">{item}</span>', unsafe_allow_html=True)
 
         with right_col:
-            st.markdown("**Disliked Elements**")
+            st.markdown("**Disliked elements**")
             for item in analysis.get("disliked", []):
-                st.write(f"- {item}")
+                st.markdown(f'<span class="pill">{item}</span>', unsafe_allow_html=True)
 
-            st.markdown("**Recommendation Themes**")
+            st.markdown("**Recommendation themes**")
             for item in analysis.get("themes", []):
-                st.write(f"- {item}")
+                st.markdown(f'<span class="pill">{item}</span>', unsafe_allow_html=True)
 
-        st.subheader("How this works")
-        st.write(
-            "This system first extracts structured preference signals from natural language input, "
-            "then uses those signals to guide recommendation generation. "
-            "This mirrors how modern recommendation systems interpret user intent."
+        st.markdown("</div>", unsafe_allow_html=True)
+
+        st.markdown(
+            """
+            <div class="soft-card">
+                <div class="section-label">🔮 How it works</div>
+            """,
+            unsafe_allow_html=True
         )
+        st.write(
+            "This system first reads natural language like mood, taste, and context, then translates it into structured signals that guide more personalised recommendations."
+        )
+        st.markdown("</div>", unsafe_allow_html=True)
 
-        st.subheader("Generated Prompt")
+        st.markdown(
+            """
+            <div class="soft-card">
+                <div class="section-label">🪄 Generated prompt</div>
+            """,
+            unsafe_allow_html=True
+        )
         st.code(prompt, language="text")
+        st.markdown("</div>", unsafe_allow_html=True)
 
-        st.subheader("Recommendations")
+        st.markdown(
+            """
+            <div class="soft-card">
+                <div class="section-label">🌷 Curated recommendations</div>
+            """,
+            unsafe_allow_html=True
+        )
 
         for rec in recommendations:
             if use_case == "Music":
                 title_label = "Song"
                 subtitle_label = "Artist"
+                icon = "🎵"
             elif use_case == "Entertainment":
                 title_label = "Title"
                 subtitle_label = "Genre"
+                icon = "🎬"
             else:
                 title_label = "Topic"
                 subtitle_label = "Category"
+                icon = "🛡️"
 
             st.markdown(
                 f"""
-                <div class="card">
-                    <p style="margin: 0.2rem 0;"><strong>{title_label}:</strong> {rec['title']}</p>
-                    <p style="margin: 0.2rem 0;"><strong>{subtitle_label}:</strong> {rec['subtitle']}</p>
-                    <p style="margin: 0.2rem 0;"><strong>Why it fits:</strong> {rec['explanation']}</p>
-                    <p style="margin: 0.2rem 0;"><strong>Confidence:</strong> {rec['confidence']}%</p>
+                <div class="rec-card">
+                    <div class="rec-title">{icon} {rec['title']}</div>
+                    <div class="rec-sub"><strong>{subtitle_label}:</strong> {rec['subtitle']}</div>
+                    <p><strong>Why it fits:</strong> {rec['explanation']}</p>
+                    <p><strong>Confidence:</strong> {rec['confidence']}%</p>
                 </div>
                 """,
                 unsafe_allow_html=True
             )
 
-        st.subheader("Analyst Insight")
+        st.markdown("</div>", unsafe_allow_html=True)
+
+        st.markdown(
+            """
+            <div class="soft-card">
+                <div class="section-label">☁️ Analyst note</div>
+            """,
+            unsafe_allow_html=True
+        )
 
         if use_case == "Music":
             st.write(
-                "Music recommendation is a strong demonstration of user-intent modelling because listeners often describe "
-                "what they want in emotional, situational, or aesthetic language rather than strict genre labels. "
-                "This makes structured preference extraction especially important."
+                "Music recommendation is especially interesting because people usually describe what they want in emotional or situational language, not rigid categories. That makes preference extraction, tone interpretation, and subtle curation much more important."
             )
         elif use_case == "Entertainment":
             st.write(
-                "This output shows how recommendation quality changes based on prompt design. "
-                "More structured prompts typically produce more consistent and explainable results."
+                "This output shows how recommendation quality changes when prompts become more structured. Small wording changes can meaningfully shift tone, relevance, and consistency."
             )
         else:
             st.write(
-                "This output demonstrates how prompt engineering can be adapted for intelligence-style tasks, "
-                "including topic recommendation, analytical framing, and relevance prioritisation."
+                "This output shows how prompt-based systems can support analytical workflows by translating rough user intent into clearer, more actionable recommendation themes."
             )
 
-        st.subheader("Why this demo matters")
-        st.write(
-            "This project demonstrates how prompt engineering can be used not just to generate outputs, "
-            "but to transform messy user descriptions into structured signals that support more personalised recommendations."
-        )
+        st.markdown("</div>", unsafe_allow_html=True)
 
-st.divider()
+        st.markdown(
+            """
+            <div class="soft-card">
+                <div class="section-label">✨ Why this demo matters</div>
+            """,
+            unsafe_allow_html=True
+        )
+        st.write(
+            "This project explores how messy human descriptions can become structured, recommendation-ready signals. It is designed to demonstrate personalisation thinking, prompt design, and user-intent modelling in a more human and expressive way."
+        )
+        st.markdown("</div>", unsafe_allow_html=True)
+
+st.markdown("---")
 st.caption(
-    "Built as a prompt engineering portfolio project. "
-    "Next step: connect to a live model API for fully dynamic recommendations."
+    "Built as a portfolio project blending recommendation logic, prompt engineering, and a softer more whimsical product aesthetic."
 )
