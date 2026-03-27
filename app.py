@@ -9,9 +9,6 @@ st.set_page_config(
 
 
 def generate_prompt(user_input: str, strategy: str, use_case: str) -> str:
-    """
-    Generate a prompt based on the selected strategy and use case.
-    """
     if use_case == "Entertainment":
         if strategy == "Basic":
             return f"Recommend 5 films or shows based on this request: {user_input}"
@@ -76,11 +73,135 @@ def generate_prompt(user_input: str, strategy: str, use_case: str) -> str:
     return f"Recommend 5 items based on: {user_input}"
 
 
+def analyse_preferences(user_input: str, use_case: str) -> dict:
+    text = user_input.lower()
+
+    if use_case == "Music":
+        primary_interests = []
+        style_preferences = []
+        disliked = []
+        themes = []
+
+        if any(word in text for word in ["indie", "alt", "alternative"]):
+            primary_interests.append("indie music")
+        if any(word in text for word in ["sad", "emotional", "heartbreak", "cry"]):
+            primary_interests.append("emotional music")
+        if any(word in text for word in ["soft", "gentle", "quiet"]):
+            style_preferences.append("soft vocals")
+        if any(word in text for word in ["warm", "intimate", "acoustic"]):
+            style_preferences.append("warm, intimate sound")
+        if any(word in text for word in ["lyrics", "lyrical", "thoughtful", "poetic"]):
+            style_preferences.append("thoughtful lyrics")
+        if any(word in text for word in ["mainstream", "commercial", "basic"]):
+            disliked.append("overly mainstream songs")
+        if any(word in text for word in ["rain", "rainy", "walk", "night", "late-night"]):
+            themes.append("reflective listening")
+        if any(word in text for word in ["gym", "workout", "run", "energy"]):
+            themes.append("high-energy motivation")
+        if any(word in text for word in ["dreamy", "ethereal", "floaty"]):
+            themes.append("dreamy atmosphere")
+
+        if not primary_interests:
+            primary_interests = ["music discovery", "personalised listening"]
+        if not style_preferences:
+            style_preferences = ["mood-based recommendations", "listener-intent interpretation"]
+        if not disliked:
+            disliked = ["poor-fit generic suggestions"]
+        if not themes:
+            themes = ["playlist curation", "taste-based matching"]
+
+        return {
+            "primary_interests": primary_interests,
+            "style_preferences": style_preferences,
+            "disliked": disliked,
+            "themes": themes
+        }
+
+    elif use_case == "Entertainment":
+        primary_interests = []
+        style_preferences = []
+        disliked = []
+        themes = []
+
+        if any(word in text for word in ["thriller", "crime", "mystery"]):
+            primary_interests.append("thrillers and suspense")
+        if any(word in text for word in ["emotional", "character", "deep"]):
+            primary_interests.append("emotional depth")
+        if any(word in text for word in ["twist", "plot twist"]):
+            style_preferences.append("twist-driven storytelling")
+        if any(word in text for word in ["fast", "paced", "intense"]):
+            style_preferences.append("fast-paced narratives")
+        if any(word in text for word in ["slow", "boring"]):
+            disliked.append("slow pacing")
+        if any(word in text for word in ["dark", "psychological"]):
+            themes.append("psychological tension")
+        if any(word in text for word in ["comfort", "cosy", "feel good", "rainy"]):
+            themes.append("comfort viewing")
+
+        if not primary_interests:
+            primary_interests = ["personalised media recommendations"]
+        if not style_preferences:
+            style_preferences = ["genre and mood matching"]
+        if not disliked:
+            disliked = ["poor contextual fit"]
+        if not themes:
+            themes = ["viewer intent modelling"]
+
+        return {
+            "primary_interests": primary_interests,
+            "style_preferences": style_preferences,
+            "disliked": disliked,
+            "themes": themes
+        }
+
+    elif use_case == "Security":
+        primary_interests = []
+        style_preferences = []
+        disliked = []
+        themes = []
+
+        if any(word in text for word in ["phishing", "email", "credential"]):
+            primary_interests.append("phishing-related threats")
+        if any(word in text for word in ["ransomware", "extortion", "encrypt"]):
+            primary_interests.append("ransomware analysis")
+        if any(word in text for word in ["soc", "siem", "sentinel", "alert"]):
+            primary_interests.append("SOC operations")
+        if any(word in text for word in ["kql", "query", "detection", "rule"]):
+            style_preferences.append("practical detection engineering")
+        if any(word in text for word in ["real-world", "practical"]):
+            style_preferences.append("real-world applicability")
+        if any(word in text for word in ["theory", "theoretical"]):
+            disliked.append("purely theoretical content")
+        if any(word in text for word in ["triage", "incident", "response"]):
+            themes.append("incident handling")
+        if any(word in text for word in ["intel", "osint", "ioc", "threat actor"]):
+            themes.append("threat intelligence enrichment")
+
+        if not primary_interests:
+            primary_interests = ["cybersecurity analysis"]
+        if not style_preferences:
+            style_preferences = ["practical security recommendations"]
+        if not disliked:
+            disliked = ["low-value generic advice"]
+        if not themes:
+            themes = ["defensive prioritisation"]
+
+        return {
+            "primary_interests": primary_interests,
+            "style_preferences": style_preferences,
+            "disliked": disliked,
+            "themes": themes
+        }
+
+    return {
+        "primary_interests": [],
+        "style_preferences": [],
+        "disliked": [],
+        "themes": []
+    }
+
+
 def get_recommendations(user_input: str, use_case: str) -> list[dict]:
-    """
-    Mock recommendations for demo purposes.
-    Replace later with a real API if needed.
-    """
     entertainment_data = {
         "thriller": [
             ("Gone Girl", "Psychological Thriller", "A tense and twist-filled story with strong suspense."),
@@ -149,7 +270,7 @@ def get_recommendations(user_input: str, use_case: str) -> list[dict]:
             ("Liability", "Lorde", "Minimal, vulnerable, and emotionally raw."),
             ("Skinny Love", "Bon Iver", "Fragile indie-folk with a haunting tone."),
             ("When the Party's Over", "Billie Eilish", "Quiet, intimate, and deeply reflective."),
-            ("Ghostin", "Ariana Grande", "Soft and aching with layered emotional themes.")
+            ("ghostin", "Ariana Grande", "Soft and aching with layered emotional themes.")
         ],
         "indie_rainy": [
             ("Cherry Wine", "Hozier", "Gentle acoustic melancholy perfect for a reflective mood."),
@@ -195,17 +316,15 @@ def get_recommendations(user_input: str, use_case: str) -> list[dict]:
         else:
             chosen = random.choice(list(entertainment_data.values()))
 
-        recommendations = []
-        for title, category, explanation in chosen:
-            recommendations.append(
-                {
-                    "title": title,
-                    "subtitle": category,
-                    "explanation": explanation,
-                    "confidence": random.randint(84, 97)
-                }
-            )
-        return recommendations
+        return [
+            {
+                "title": title,
+                "subtitle": category,
+                "explanation": explanation,
+                "confidence": random.randint(84, 97)
+            }
+            for title, category, explanation in chosen
+        ]
 
     if use_case == "Security":
         if any(word in text for word in ["phishing", "email", "credential"]):
@@ -219,17 +338,15 @@ def get_recommendations(user_input: str, use_case: str) -> list[dict]:
         else:
             chosen = random.choice(list(security_data.values()))
 
-        recommendations = []
-        for title, category, explanation in chosen:
-            recommendations.append(
-                {
-                    "title": title,
-                    "subtitle": category,
-                    "explanation": explanation,
-                    "confidence": random.randint(84, 97)
-                }
-            )
-        return recommendations
+        return [
+            {
+                "title": title,
+                "subtitle": category,
+                "explanation": explanation,
+                "confidence": random.randint(84, 97)
+            }
+            for title, category, explanation in chosen
+        ]
 
     if use_case == "Music":
         if any(word in text for word in ["sad", "heartbreak", "cry", "breakup", "emotional"]):
@@ -245,17 +362,15 @@ def get_recommendations(user_input: str, use_case: str) -> list[dict]:
         else:
             chosen = random.choice(list(music_data.values()))
 
-        recommendations = []
-        for song, artist, explanation in chosen:
-            recommendations.append(
-                {
-                    "title": song,
-                    "subtitle": artist,
-                    "explanation": explanation,
-                    "confidence": random.randint(84, 97)
-                }
-            )
-        return recommendations
+        return [
+            {
+                "title": song,
+                "subtitle": artist,
+                "explanation": explanation,
+                "confidence": random.randint(84, 97)
+            }
+            for song, artist, explanation in chosen
+        ]
 
     return []
 
@@ -367,11 +482,42 @@ if generate_clicked:
         st.warning("Please enter a request first.")
     else:
         prompt = generate_prompt(user_input, strategy, use_case)
+        analysis = analyse_preferences(user_input, use_case)
 
         with st.spinner("Generating recommendations..."):
             recommendations = get_recommendations(user_input, use_case)
 
         st.divider()
+
+        st.subheader("Preference Analysis")
+
+        left_col, right_col = st.columns(2)
+
+        with left_col:
+            st.markdown("**Primary Interests**")
+            for item in analysis.get("primary_interests", []):
+                st.write(f"- {item}")
+
+            st.markdown("**Style Preferences**")
+            for item in analysis.get("style_preferences", []):
+                st.write(f"- {item}")
+
+        with right_col:
+            st.markdown("**Disliked Elements**")
+            for item in analysis.get("disliked", []):
+                st.write(f"- {item}")
+
+            st.markdown("**Recommendation Themes**")
+            for item in analysis.get("themes", []):
+                st.write(f"- {item}")
+
+        st.subheader("How this works")
+        st.write(
+            "This system first extracts structured preference signals from natural language input, "
+            "then uses those signals to guide recommendation generation. "
+            "This mirrors how modern recommendation systems interpret user intent."
+        )
+
         st.subheader("Generated Prompt")
         st.code(prompt, language="text")
 
@@ -404,9 +550,9 @@ if generate_clicked:
 
         if use_case == "Music":
             st.write(
-                "Music recommendation is especially useful for demonstrating user-intent modelling because listeners "
-                "often describe what they want in emotional or contextual language rather than technical genre terms. "
-                "This makes prompt design, mood interpretation, and output consistency especially important."
+                "Music recommendation is a strong demonstration of user-intent modelling because listeners often describe "
+                "what they want in emotional, situational, or aesthetic language rather than strict genre labels. "
+                "This makes structured preference extraction especially important."
             )
         elif use_case == "Entertainment":
             st.write(
@@ -422,7 +568,7 @@ if generate_clicked:
         st.subheader("Why this demo matters")
         st.write(
             "This project demonstrates how prompt engineering can be used not just to generate outputs, "
-            "but to simulate recommendation logic, compare prompting strategies, and evaluate the quality of results."
+            "but to transform messy user descriptions into structured signals that support more personalised recommendations."
         )
 
 st.divider()
@@ -430,31 +576,3 @@ st.caption(
     "Built as a prompt engineering portfolio project. "
     "Next step: connect to a live model API for fully dynamic recommendations."
 )
-def analyse_preferences(user_input: str, use_case: str) -> dict:
-    text = user_input.lower()
-
-    if use_case == "Music":
-        return {
-            "primary_interests": ["indie", "emotional", "soft vocals"],
-            "style_preferences": ["intimate", "warm", "lyric-driven"],
-            "disliked": ["overly mainstream", "highly commercial"],
-            "themes": ["late-night listening", "rainy mood", "reflective"]
-        }
-
-    elif use_case == "Entertainment":
-        return {
-            "primary_interests": ["thriller", "emotional depth"],
-            "style_preferences": ["plot-driven", "character-focused"],
-            "disliked": ["slow pacing"],
-            "themes": ["psychological tension", "twists"]
-        }
-
-    elif use_case == "Security":
-        return {
-            "primary_interests": ["threat detection", "analysis"],
-            "style_preferences": ["practical", "real-world"],
-            "disliked": ["theoretical only"],
-            "themes": ["SOC workflows", "incident response"]
-        }
-
-    return {}
