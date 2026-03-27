@@ -4,6 +4,18 @@ A project exploring how prompt engineering can be used to design and evaluate re
 
 This project moves beyond basic prompting by testing multiple prompt strategies, analysing output quality, and examining how large language models interpret user intent in recommendation tasks.
 
+
+## Live Demo
+
+Experience the system in action:
+👉 https://stefanieversace-ai-recommendation-prompt-lab-app-y7w7wd.streamlit.app/
+
+This interactive demo allows users to:
+
+* input natural language preferences
+* test different prompt strategies
+* explore how recommendation outputs change based on prompt design
+
 ---
 
 ## Overview
