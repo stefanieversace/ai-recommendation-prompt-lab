@@ -1,50 +1,141 @@
 # AI Recommendation Prompt Lab
 
-This project explores how AI prompts can be used to generate personalized recommendations from user preferences and behavior signals.
+A project exploring how prompt engineering can be used to design and evaluate recommendation systems.
 
-## Objective
+This project moves beyond basic prompting by testing multiple prompt strategies, analysing output quality, and examining how large language models interpret user intent in recommendation tasks.
 
-Design prompts that turn unstructured preference information into useful recommendation outputs.
+---
 
-## Example Use Cases
+## Overview
 
-- music recommendations
-- movie recommendations
-- product recommendations
-- content personalization
+Traditional recommendation systems rely on collaborative filtering and behavioural data.
 
-## Repository Structure
+This project explores an alternative approach: generating recommendations using structured prompts and analysing how effectively a language model can simulate recommendation logic.
 
-- `prompts/` - prompt designs for recommendation tasks
-- `examples/` - example user inputs and outputs
-- `case-study.md` - mini demonstration of recommendation workflow
+The focus is not just on generating outputs, but on evaluating their quality, consistency, and limitations.
 
-## Skills Demonstrated
-
-- prompt engineering
-- personalization logic
-- structured output design
-- AI-assisted recommendation workflows
+---
 
 ## System Architecture
 
 User Input → Prompt Template → LLM → Structured Output → Recommendation
 
-Components:
-- Input layer: user preferences (genre, mood, constraints)
-- Prompt engineering layer: structured prompts
-- LLM processing
-- Output formatting layer
+**Components:**
 
-  ## Analyst Insights
+* **Input Layer:** Captures user preferences (e.g. genre, mood, constraints)
+* **Prompt Engineering Layer:** Structures input into controlled prompts
+* **LLM Processing:** Generates recommendations based on prompt design
+* **Output Layer:** Formats and presents results
 
-Prompt-based recommendation systems highlight a key limitation:
+---
 
-They rely heavily on how well user intent is captured in natural language.
+## Prompt Strategies
 
-Small prompt variations significantly change output quality, which introduces:
-- inconsistency
-- bias
-- lack of reproducibility
+This project tests multiple prompt engineering approaches to evaluate their impact on recommendation quality:
 
-This suggests prompt engineering alone is not sufficient for scalable recommendation systems.
+1. **Basic Prompt**
+   Simple, open-ended instruction
+
+2. **Structured Prompt**
+   Includes constraints such as tone, format, and number of outputs
+
+3. **Persona-Based Prompt**
+   Model is assigned a role (e.g. film critic, analyst)
+
+4. **Comparative Prompting**
+   Requests similarity-based recommendations
+
+---
+
+## Evaluation
+
+To assess effectiveness, multiple test cases were conducted:
+
+**Test Case 1**
+Input: "Movies like Inception but more emotional"
+Output: Interstellar, Arrival
+Result: Relevant, but slightly broad in interpretation
+
+**Test Case 2**
+Input: "Underrated romantic comedies from the 2000s"
+Output: Definitely, Maybe; The Holiday
+Result: Strong contextual understanding and specificity
+
+**Test Case 3**
+Input: "Fast-paced thrillers with plot twists"
+Output: Gone Girl, Shutter Island
+Result: High relevance, strong genre alignment
+
+**Key Findings:**
+
+* Increased prompt specificity improves recommendation accuracy
+* Structured prompts produce more consistent outputs
+* Open-ended prompts introduce variability and bias
+
+---
+
+## Analyst Insights
+
+Prompt-based recommendation systems highlight a critical limitation: they rely heavily on how user intent is expressed.
+
+Small variations in prompt wording can significantly change outputs, introducing:
+
+* inconsistency
+* bias
+* lack of reproducibility
+
+This suggests that prompt engineering alone is not sufficient for scalable recommendation systems, and should be combined with structured data or feedback mechanisms.
+
+---
+
+## Use Cases
+
+### Entertainment
+
+Simulating how streaming platforms generate content recommendations based on user preferences, mood, and genre blending.
+
+### Security & Intelligence
+
+Applying prompt-based systems to recommend:
+
+* relevant threat intelligence reports
+* similar attack patterns
+* potential mitigation strategies
+
+---
+
+## Code Example
+
+```python
+def generate_prompt(user_input):
+    return f"Recommend 5 items based on the following preferences: {user_input}"
+
+def get_recommendations(prompt):
+    # Placeholder for LLM call
+    return "Generated recommendations based on prompt"
+```
+
+---
+
+## Future Improvements
+
+* Integrate vector databases for similarity-based recommendations
+* Introduce user feedback loops for iterative improvement
+* Compare LLM-based recommendations with traditional algorithms
+* Develop a lightweight front-end interface for interaction
+
+---
+
+## Project Focus
+
+This project demonstrates:
+
+* Prompt engineering techniques
+* Analytical evaluation of AI-generated outputs
+* Application of AI systems to real-world recommendation scenarios
+
+---
+
+## Disclaimer
+
+This project is for research and demonstration purposes only. Outputs are generated by a language model and may vary based on prompt design.
