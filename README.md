@@ -4,27 +4,25 @@ A project exploring how prompt engineering can be used to design and evaluate re
 
 This project moves beyond basic prompting by testing multiple prompt strategies, analysing output quality, and examining how large language models interpret user intent in recommendation tasks.
 
-
 ## Live Demo
 
-Experience the system in action:
+Try the interactive app here:  
 👉 https://stefanieversace-ai-recommendation-prompt-lab-app-y7w7wd.streamlit.app/
 
-This interactive demo allows users to:
+This demo allows users to explore recommendation outputs across:
+- entertainment
+- music
+- security
 
-* input natural language preferences
-* test different prompt strategies
-* explore how recommendation outputs change based on prompt design
+It is designed to show how prompt engineering can simulate recommendation systems by interpreting natural language preferences, mood, and user intent.
 
 ---
 
 ## Overview
 
-Traditional recommendation systems rely on collaborative filtering and behavioural data.
+This project explores how prompt engineering can be used to simulate recommendation systems across multiple domains, including music, entertainment, and cybersecurity.
 
-This project explores an alternative approach: generating recommendations using structured prompts and analysing how effectively a language model can simulate recommendation logic.
-
-The focus is not just on generating outputs, but on evaluating their quality, consistency, and limitations.
+The project focuses on how large language models interpret natural language requests such as mood, genre, context, and listener intent, and how prompt design influences output quality, consistency, and relevance.
 
 ---
 
